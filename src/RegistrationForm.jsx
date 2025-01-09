@@ -5,6 +5,7 @@ const RegistraionForm = () => {
     const [getData, setData] = useState({
         studentName: "",
         studentAddress: "",
+        studentphn:"",
         studentMail: "",
         studentGender: "",
         studentDOB: "",
@@ -16,10 +17,12 @@ const RegistraionForm = () => {
 
     const validateForm = () => {
         const errors = {};
-        const { studentName, studentAddress, studentMail, studentGender, studentDOB, studentCourse } = getData;
+        const { studentName, studentAddress, studentphn, studentMail, studentGender, studentDOB, studentCourse } = getData;
 
         if (!studentName.trim()) errors.studentName = "Name is required.";
         if (!studentAddress.trim()) errors.studentAddress = "Address is required.";
+        if (!studentphn) errors.studentphn = "Phone number is required.";
+
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(studentMail)) errors.studentMail = "Invalid email address.";
         if (!studentGender) errors.studentGender = "Gender is required.";
         if (!studentDOB) errors.studentDOB = "Date of Birth is required.";
@@ -44,10 +47,11 @@ const RegistraionForm = () => {
     const handleSubmit = () => {
         validateForm();
         if (isFormValid) {
-            const { studentName, studentAddress, studentMail, studentGender, studentDOB, studentCourse } = getData;
+            const { studentName, studentAddress, studentphn, studentMail, studentGender, studentDOB, studentCourse } = getData;
             const alertMessage = `
             Name: ${studentName}
             Address: ${studentAddress}
+            Phone: ${studentphn}
             E-mail: ${studentMail}
             Gender: ${studentGender}
             Date of Birth: ${studentDOB}
@@ -63,6 +67,7 @@ const RegistraionForm = () => {
         setData({
             studentName: "",
             studentAddress: "",
+            studentphn:"",
             studentMail: "",
             studentGender: "",
             studentDOB: "",
@@ -96,6 +101,19 @@ const RegistraionForm = () => {
                     />
                     {validationErrors.studentAddress && <div className="text-danger">{validationErrors.studentAddress}</div>}
                 </FloatingLabel>
+
+                <FloatingLabel controlId="floatingnumber" label="Phone number" className="mt-3">
+                    <Form.Control
+                        value={getData.studentphn}
+                        onChange={(e) => handleInputChange("studentphn", e.target.value)}
+                        onBlur={handleBlur}
+                        type="number"
+                        placeholder="Enter your number"
+                    />
+                    {validationErrors.studentphn && <div className="text-danger">{validationErrors.studentphn}</div>}
+                </FloatingLabel>
+               
+
                 <FloatingLabel controlId="floatingInput" label="Email address" className="mt-3">
                     <Form.Control
                         value={getData.studentMail}
